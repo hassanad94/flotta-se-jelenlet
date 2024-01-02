@@ -1,0 +1,26 @@
+services:
+  nextapp:
+      container_name: nextapp
+      image: cappuchinosoft/flottajelenlet
+      build:
+        dockerfile: next.dockerfile
+      ports:
+        - 23000:3000
+      environment:
+        - NEXT_PUBLIC_API_URL=http://localhost:8080
+      depends_on:
+        - db
+  db:
+    container_name: db
+    image: postgres:16
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 10825660
+      POSTGRES_DB: flotta
+    ports:
+      - 25432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
