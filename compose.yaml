@@ -8,6 +8,9 @@ services:
         - 23000:3000
       environment:
         - NEXT_PUBLIC_API_URL=http://localhost:8080
+        - FACEBOOK_CLIENT_ID=673328878328850
+        - FACEBOOK_CLIENT_SECRET=7b55b25cefad0b238e8b16d1ea3e1d08
+        - NEXTAUTH_SECRET=a_flotta_nyeri_a_bajnoksagot
       depends_on:
         - db
   db:

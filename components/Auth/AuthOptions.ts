@@ -1,7 +1,6 @@
-import NextAuth from "next-auth";
+import { AuthOptions } from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
-
-export const handler = NextAuth({
+export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || "",
   providers: [
     FacebookProvider({
@@ -9,17 +8,12 @@ export const handler = NextAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "",
     }),
   ],
-  callbacks:{
-    async jwt({token, user}) {     
+  callbacks: {
+    async jwt({ token, user }) {
       if (user?.id) {
-          token.id = user.id
+        token.id = user.id;
       }
-      return token
-   },
-
-  }
-
-});
-
-
-export { handler as GET, handler as POST };
+      return token;
+    },
+  },
+};
