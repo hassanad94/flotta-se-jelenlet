@@ -1,18 +1,7 @@
+import { Context, Env, HonoRequest } from "hono";
 
-//@dec       Fetch attendances for the given date
-//@route     GET /api/jelenlet
-//@access    Public
+export const getJelenlet = (date?: Date) => {
+  const currentDate = date || new Date();
 
-import { Context, Env, HonoRequest } from "hono"
-
-
-
-const  getJelenlet = async (date : Date | undefined) => {
-
-	const currentDate = date || new Date()
-
-
-
-	res.json(jelenlet)
-
-}
+  return { true: true };
+};

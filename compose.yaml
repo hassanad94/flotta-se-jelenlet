@@ -12,15 +12,22 @@ services:
         - db
   db:
     container_name: db
-    image: postgres:16
+    image: mysql:8.2
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 10825660
-      POSTGRES_DB: flotta
+      MYSQL_DATABASE: 'flotta'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'admin'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: '10825660'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: '10825660'
     ports:
-      - 25432:5432
+      - 23306:3306
+    expose:
+      # Opens port 3306 on the container
+      - '23306'
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - my-db:/var/lib/mysql
 
 volumes:
-  pgdata: {}
+  mysqldata: {}
