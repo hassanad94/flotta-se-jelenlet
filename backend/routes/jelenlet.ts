@@ -4,12 +4,12 @@ import { getJelenlet } from "../controllers/getJelenlet";
 
 const app = new Hono();
 
-app.get("/", (c) => {
+app.get("/", async (c) => {
   const date = c.req.query("date");
 
   if (date === undefined) {
-    const result = getJelenlet();
-    return c.json({ result });
+    const result = await getJelenlet();
+    return c.json({ message: "notStrictEqual", result });
   }
 
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
