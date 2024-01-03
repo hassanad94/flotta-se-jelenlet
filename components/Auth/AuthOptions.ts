@@ -13,6 +13,7 @@ export const authOptions: AuthOptions = {
       if (user?.id) {
         token.id = user.id;
       }
+
       return token;
     },
   },

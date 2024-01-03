@@ -24,7 +24,7 @@ export const NavbarUser = () => {
         <DropdownMenuTrigger>
           <div className="flex items-center justify-center bold gap-5 ">
             <h2> {session?.user?.name}</h2>
-            <Image alt="Avatar" src={img} width={50} height={50} />
+            <Image priority alt="Avatar" src={img} width={50} height={50} />
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

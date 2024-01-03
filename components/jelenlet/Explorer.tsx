@@ -7,6 +7,14 @@ import {
   Table,
 } from "@/components/ui/table";
 
+import axios from "axios";
+
+const getJelenlet = async (date?: Date) => {
+  const response = await axios.get(`http://localhost:3030/jelenlet/${date}`);
+  const data = await response.data;
+  return data;
+};
+
 export function Explorer() {
   return (
     <div className="w-full p-6 flex flex-col items-start">

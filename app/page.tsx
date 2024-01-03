@@ -1,5 +1,4 @@
 import { Explorer } from "@/components/jelenlet/Explorer";
-import Image from "next/image";
 
 export default function Home() {
   return (
