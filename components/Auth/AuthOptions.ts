@@ -1,3 +1,4 @@
+import axios from "axios";
 import { AuthOptions } from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
 export const authOptions: AuthOptions = {
@@ -15,6 +16,15 @@ export const authOptions: AuthOptions = {
       }
 
       return token;
+    },
+    async signIn({ user }) {
+      console.log("user", user);
+
+      const response = await axios.post("http://localhost:3001/api/user", {
+        ...user,
+      });
+
+      return response.data;
     },
   },
 };

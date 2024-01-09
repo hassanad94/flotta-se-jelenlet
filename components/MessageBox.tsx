@@ -18,8 +18,6 @@ export const MessageBox = () => {
     return () => clearTimeout(timer); // This will clear the timer when the component unmounts
   }, [pathname]);
 
-  console.log("isVisible", isVisible);
-
   const searchParams = useSearchParams();
 
   const message = searchParams.get("message");

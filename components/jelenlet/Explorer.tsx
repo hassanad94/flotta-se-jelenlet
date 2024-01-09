@@ -10,12 +10,27 @@ import {
 import axios from "axios";
 
 const getJelenlet = async (date?: Date) => {
-  const response = await axios.get(`http://localhost:3030/jelenlet/${date}`);
-  const data = await response.data;
-  return data;
+  try {
+    const response = await axios.post("http://localhost:3001/api/user", {
+      email: "hassanad94@windowslive.coms",
+      name: "Ádám Massan",
+    });
+    // const post = await axios.post("http://localhost:3001/api/jelenlet", {
+    //   email: "hassanad94@windowslive.com",
+    // });
+
+    // console.log(post.data);
+
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-export function Explorer() {
+export async function Explorer() {
+  const data = await getJelenlet();
+
   return (
     <div className="w-full p-6 flex flex-col items-start">
       <select className="border self-end border-gray-300 rounded-full text-gray-600 h-10 px-5 text-center bg-white hover:border-gray-400 focus:outline-none appearance-none">
