@@ -1,18 +1,4 @@
 services:
-  backend:
-    container_name: honoBackend
-    image: cappuchinosoft/flottajelenletBackend
-    build:
-      dockerfile: backend.dockerfile
-    ports:
-      - 23030:3030
-    environment:
-      - DB_HOST=38.242.211.248
-      - DB_PORT=23306
-      - DB_NAME=flotta
-      - DB_USER=admin
-      - DB_PASS=10825660
-      - API_PORT=3030
   nextapp:
       container_name: nextapp
       image: cappuchinosoft/flottajelenlet
@@ -21,10 +7,18 @@ services:
       ports:
         - 23000:3001
       environment:
-        - NEXT_PUBLIC_API_URL=http://localhost:8080
         - FACEBOOK_CLIENT_ID=673328878328850
         - FACEBOOK_CLIENT_SECRET=7b55b25cefad0b238e8b16d1ea3e1d08
         - NEXTAUTH_SECRET=a_flotta_nyeri_a_bajnoksagot
+        - NEXTAUTH_URL=http://localhost:3000/api/auth
+        - NEXT_API_URL=http://localhost:3000/api
+        - DB_HOST=38.242.211.248
+        - DB_PORT=23306
+        - DB_NAME=flotta
+        - DB_USER=admin
+        - DB_PASS=10825660
+        - API_PORT=3030
+        - API_PORT=3000
       depends_on:
         - db
   db:

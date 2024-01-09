@@ -10,16 +10,13 @@ import {
 import axios from "axios";
 
 const getJelenlet = async (date?: Date) => {
+  const apiURL = process.env.NEXT_API_URL || "http://localhost:3000/api/";
+
   try {
-    const response = await axios.post("http://localhost:3001/api/user", {
+    const response = await axios.post(`${apiURL}/user`, {
       email: "hassanad94@windowslive.coms",
       name: "Ádám Massan",
     });
-    // const post = await axios.post("http://localhost:3001/api/jelenlet", {
-    //   email: "hassanad94@windowslive.com",
-    // });
-
-    // console.log(post.data);
 
     const data = await response.data;
     return data;

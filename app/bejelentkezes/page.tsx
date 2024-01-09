@@ -5,13 +5,14 @@ import { redirect } from "next/navigation";
 
 const Page = async () => {
   const { data: session } = useSession();
+  const apiPort = process.env.API_PORT || 3001;
 
   let apiPath = "/api/auth/signin";
 
-  let url = new URL("http://localhost:3001/api/auth/signin");
+  let url = new URL(`http://localhost:${apiPort}/api/auth/signin`);
 
   let params = new URLSearchParams({
-    calbackUrl: "http://localhost:3001//bejelentkezes",
+    calbackUrl: `http://localhost:${apiPort}//bejelentkezes`,
   });
 
   url.search = params.toString();
@@ -21,7 +22,7 @@ const Page = async () => {
   if (!session) return redirect(apiPath);
 
   //create a url with query params
-  url = new URL("http://localhost:3001/");
+  url = new URL(`http://localhost:${apiPort}/`);
   params = new URLSearchParams({
     message: "Sikeresen Bejelentkeztél Edzésre. ⚽⚽⚽",
     type: "success",
@@ -30,7 +31,7 @@ const Page = async () => {
 
   apiPath = url.toString();
 
-  const post = await axios.post("http://localhost:3001/api/jelenlet", {
+  const post = await axios.post(`http://localhost:${apiPort}/api/jelenlet`, {
     email: session?.user?.email,
   });
 
