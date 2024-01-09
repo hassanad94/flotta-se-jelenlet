@@ -5,7 +5,7 @@ services:
       build:
         dockerfile: next.dockerfile
       ports:
-        - 23000:3001
+        - 23000:3000
       environment:
         - FACEBOOK_CLIENT_ID=673328878328850
         - FACEBOOK_CLIENT_SECRET=7b55b25cefad0b238e8b16d1ea3e1d08
@@ -19,8 +19,6 @@ services:
         - DB_PASS=10825660
         - API_PORT=3030
         - API_PORT=3000
-      depends_on:
-        - db
   db:
     container_name: db
     image: mysql:8.2
@@ -32,6 +30,7 @@ services:
       MYSQL_PASSWORD: '10825660'
       # Password for root access
       MYSQL_ROOT_PASSWORD: '10825660'
+      TZ: Europe/Budapest 
     ports:
       - 23306:3306
     expose:

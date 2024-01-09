@@ -12,7 +12,7 @@ const Page = async () => {
   let url = new URL(`http://localhost:${apiPort}/api/auth/signin`);
 
   let params = new URLSearchParams({
-    calbackUrl: `http://localhost:${apiPort}//bejelentkezes`,
+    calbackUrl: `http://localhost:${apiPort}/bejelentkezes`,
   });
 
   url.search = params.toString();
