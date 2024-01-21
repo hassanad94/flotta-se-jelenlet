@@ -26,7 +26,7 @@ const getJelenlet = async (date?: Date) => {
 };
 
 export async function Explorer() {
-  const data = await getJelenlet();
+  // const data = await getJelenlet();
 
   return (
     <div className="w-full p-6 flex flex-col items-start">
