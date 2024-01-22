@@ -9,16 +9,26 @@ import {
 
 import axios from "axios";
 
+import { firstDayOfWeek } from "@/utils/date";
+
+type Jelenlet = {
+  name: string;
+  count: number;
+};
+
 const getJelenlet = async (date?: Date) => {
-  const apiURL = process.env.NEXT_API_URL || "http://localhost:3000/api/";
+  const apiURL =
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api/";
+
+  const startofWeek = date || firstDayOfWeek();
 
   try {
-    const response = await axios.post(`${apiURL}/user`, {
-      email: "hassanad94@windowslive.coms",
-      name: "Ádám Massan",
-    });
+    console.log(`${apiURL}/jelenlet?date=${startofWeek}`);
+    const response = await axios.get<Jelenlet[]>(
+      `${apiURL}/jelenlet?date=${startofWeek}`
+    );
 
-    const data = await response.data;
+    const data = response.data;
     return data;
   } catch (error) {
     console.error(error);
@@ -26,15 +36,14 @@ const getJelenlet = async (date?: Date) => {
 };
 
 export async function Explorer() {
-  // const data = await getJelenlet();
+  const data = (await getJelenlet()) || [];
+
+  console.log("get jelenlet", data);
 
   return (
     <div className="w-full p-6 flex flex-col items-start">
       <select className="border self-end border-gray-300 rounded-full text-gray-600 h-10 px-5 text-center bg-white hover:border-gray-400 focus:outline-none appearance-none">
-        <option>Jan 1 - Jan 7</option>
-        <option>Jan 8 - Jan 14</option>
-        <option>Jan 15 - Jan 21</option>
-        <option>Jan 22 - Jan 28</option>
+        <option value="2024-01-22">Jan 22 - Jan 26</option>
       </select>
 
       <div className="flex justify-between items-center mb-4">
@@ -51,17 +60,22 @@ export async function Explorer() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell>Ádám Hassan</TableCell>
-            <TableCell>
-              <span className="px-2 py-1 bg-red-200 text-red-800 rounded-md">
-                <TagIcon className="w-4 h-4 inline-block mr-1" />
-                3 / 2
-              </span>
-            </TableCell>
-            <TableCell>Egészséges</TableCell>
-            <TableCell className="text-right">$175.00</TableCell>
-          </TableRow>
+          {data.length > 0 &&
+            data.map((jelenlet) => {
+              return (
+                <TableRow key={jelenlet.name}>
+                  <TableCell>{jelenlet.name}</TableCell>
+                  <TableCell>
+                    <span className="px-2 py-1rounded-md">
+                      <TagIcon className="w-4 h-4 inline-block mr-1" />3 /{" "}
+                      {jelenlet.count}
+                    </span>
+                  </TableCell>
+                  <TableCell>Egészséges</TableCell>
+                  <TableCell className="text-right">Ismeretlen</TableCell>
+                </TableRow>
+              );
+            })}
         </TableBody>
       </Table>
     </div>

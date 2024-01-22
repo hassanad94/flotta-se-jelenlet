@@ -1,8 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { ClassValue } from "clsx";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const MessageBox = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -28,7 +28,11 @@ export const MessageBox = () => {
   const defaultClasses: ClassValue = "p-4 rounded-md m-2 text-center";
 
   if (type === "success") {
-    return <div className={cn(defaultClasses, "bg-green-500 text-white")}>{message}</div>;
+    return (
+      <div className={cn(defaultClasses, "bg-green-500 text-white")}>
+        {message}
+      </div>
+    );
   }
 
   return <div>{message}</div>;

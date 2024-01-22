@@ -1,10 +1,10 @@
-"use client";
-import axios from "axios";
-import { useSession } from "next-auth/react";
+import { authOptions } from "@/components/Auth/AuthOptions";
+import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const { data: session } = useSession();
+  const session = await getServerSession(authOptions);
+
   const apiPort = process.env.API_PORT || 3001;
 
   let apiPath = "/api/auth/signin";
@@ -21,19 +21,33 @@ const Page = async () => {
 
   if (!session) return redirect(apiPath);
 
+  console.log({ session });
   //create a url with query params
   url = new URL(`http://localhost:${apiPort}/`);
   params = new URLSearchParams({
-    message: "Sikeresen Bejelentkeztél Edzésre. ⚽⚽⚽",
+    message: "sikeresen Bejelentkeztél Edzésre. ⚽⚽⚽",
     type: "success",
   });
   url.search = params.toString();
 
   apiPath = url.toString();
 
-  const post = await axios.post(`http://localhost:${apiPort}/api/jelenlet`, {
-    email: session?.user?.email,
-  });
+  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+
+  try {
+    const response = await fetch(`${apiURL}/jelenlet`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: +session.user.id }),
+    });
+
+    const data = await response.json();
+    console.log({ data });
+  } catch (error) {
+    console.error(error);
+  }
 
   if (session) return redirect(apiPath);
 };

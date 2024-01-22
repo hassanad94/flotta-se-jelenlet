@@ -8,8 +8,19 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+type GetJelenletRequest struct {
+	Date string `query:"date"`
+}
 
 func GetJelenlet(c echo.Context) (error) {
+
+	reqdata := new(GetJelenletRequest)
+
+	err := c.Bind(reqdata)
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
 
 	connection, err := db.ConnectMySQL()
 	
@@ -17,28 +28,36 @@ func GetJelenlet(c echo.Context) (error) {
 		return err
 	}
 	
-	query := "SELECT * FROM flotta.test"
+	query := `
+		SELECT p.name,  COUNT(*) AS count
+		FROM flotta.attendences a
+		JOIN flotta.players p ON a.player_id = p.id
+		WHERE a.time_stamp BETWEEN ? AND DATE_ADD(?, INTERVAL 5 DAY)
+		GROUP BY a.player_id 
+	`
 	
-	var tests []model.Test
-	
-	rows, err := connection.Query(query)
+
+	rows, err := connection.Query(query, reqdata.Date, reqdata.Date)
 	
 	if err != nil {
 		return  err
 	}
 	
+	var jelenletek []model.Jelenlet
+
+	
 	for rows.Next(){
-		var test model.Test
-		err := rows.Scan(&test.Valami)
+		var jelenlet model.Jelenlet
+		err := rows.Scan(&jelenlet.Name, &jelenlet.Count)
 		if err != nil {
 			return err
 		}
-		tests = append(tests, test)
+		jelenletek = append(jelenletek, jelenlet)
 	}
 	
 	defer rows.Close()
 	
-	return c.JSON(http.StatusOK, tests)
+	return c.JSON(http.StatusOK, jelenletek)
 	
 }
 
@@ -83,3 +102,4 @@ func Bejelentkezes(c echo.Context) error{
  	return c.JSON(http.StatusOK, id)
 
 }
+
