@@ -1,11 +1,19 @@
 import { NextResponse } from "next/server";
-import { db } from "@/utils/database";
+import { db, testconnection } from "@/utils/database";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 export async function GET(req: Request) {
-  const [rows] = await db.query("SELECT * FROM flotta.test");
+  testconnection.connect();
 
-  return NextResponse.json({ ...rows });
+  let rows;
+
+  const result = testconnection.query("SELECT * from flotta.test", (err, _rows, _fields) => {
+    if (err) console.log(err);
+    rows = _rows;
+    testconnection.end();
+  });
+
+  console.log(rows);
 }
 
 type PostParams = {
