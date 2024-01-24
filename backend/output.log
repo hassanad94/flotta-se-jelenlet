@@ -1,0 +1,51 @@
+nohup: ignoring input
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.11.4
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:1323
+echo: http: panic serving 172.17.0.3:54228: dial tcp 38.242.211.248:23306: connect: connection refused
+goroutine 79 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go-1.21/src/net/http/server.go:1868 +0xb9
+panic({0x6d04e0?, 0xc000089cc0?})
+	/usr/lib/go-1.21/src/runtime/panic.go:920 +0x270
+cappuchinosoft/jelenlet-api/db.ConnectMySQL()
+	/var/www/flottase/jelenlet/backend/db/db.go:20 +0x6c
+cappuchinosoft/jelenlet-api/controller.GetJelenlet({0x794738, 0xc000094140})
+	/var/www/flottase/jelenlet/backend/controller/jelenlet.go:25 +0x85
+github.com/labstack/echo/v4.(*Echo).add.func1({0x794738, 0xc000094140})
+	/root/go/pkg/mod/github.com/labstack/echo/v4@v4.11.4/echo.go:582 +0x4b
+github.com/labstack/echo/v4.(*Echo).ServeHTTP(0xc000132240, {0x790da0?, 0xc0000b4a80}, 0xc0000a1000)
+	/root/go/pkg/mod/github.com/labstack/echo/v4@v4.11.4/echo.go:669 +0x399
+net/http.serverHandler.ServeHTTP({0xc0000d4b70?}, {0x790da0?, 0xc0000b4a80?}, 0x6?)
+	/usr/lib/go-1.21/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc000129b00, {0x7913a0, 0xc00007b8c0})
+	/usr/lib/go-1.21/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go-1.21/src/net/http/server.go:3086 +0x5cb
+echo: http: panic serving 172.17.0.3:54238: dial tcp 38.242.211.248:23306: connect: connection refused
+goroutine 94 [running]:
+net/http.(*conn).serve.func1()
+	/usr/lib/go-1.21/src/net/http/server.go:1868 +0xb9
+panic({0x6d04e0?, 0xc00012b5e0?})
+	/usr/lib/go-1.21/src/runtime/panic.go:920 +0x270
+cappuchinosoft/jelenlet-api/db.ConnectMySQL()
+	/var/www/flottase/jelenlet/backend/db/db.go:20 +0x6c
+cappuchinosoft/jelenlet-api/controller.GetJelenlet({0x794738, 0xc00007ea00})
+	/var/www/flottase/jelenlet/backend/controller/jelenlet.go:25 +0x85
+github.com/labstack/echo/v4.(*Echo).add.func1({0x794738, 0xc00007ea00})
+	/root/go/pkg/mod/github.com/labstack/echo/v4@v4.11.4/echo.go:582 +0x4b
+github.com/labstack/echo/v4.(*Echo).ServeHTTP(0xc000132240, {0x790da0?, 0xc0001709a0}, 0xc0000a1200)
+	/root/go/pkg/mod/github.com/labstack/echo/v4@v4.11.4/echo.go:669 +0x399
+net/http.serverHandler.ServeHTTP({0xc0000d4db0?}, {0x790da0?, 0xc0001709a0?}, 0x6?)
+	/usr/lib/go-1.21/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc0000dc5a0, {0x7913a0, 0xc00007b8c0})
+	/usr/lib/go-1.21/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/lib/go-1.21/src/net/http/server.go:3086 +0x5cb

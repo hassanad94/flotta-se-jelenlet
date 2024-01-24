@@ -11,6 +11,6 @@ COPY . ./
 
 EXPOSE 1323
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /server
+RUN  go build
 
-CMD ["/server"]
+CMD ["/app/backend/jelenlet-api"]
