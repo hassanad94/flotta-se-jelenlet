@@ -1,4 +1,14 @@
 services:
+  # backend:
+  #     container_name: backend
+  #     image: cappuchinost/jelenletbackend
+  #     build:
+  #       context: "./backend"
+  #       dockerfile: "go.dockerfile"
+  #     ports:
+  #       - 21323:1323
+  #     extra_hosts:
+  #       - "38.242.211.248:38.242.211.248"
   nextapp:
       container_name: nextapp
       image: cappuchinosoft/flottajelenlet
@@ -6,19 +16,6 @@ services:
         dockerfile: next.dockerfile
       ports:
         - 23000:3000
-      environment:
-        - FACEBOOK_CLIENT_ID=673328878328850
-        - FACEBOOK_CLIENT_SECRET=7b55b25cefad0b238e8b16d1ea3e1d08
-        - NEXTAUTH_SECRET=a_flotta_nyeri_a_bajnoksagot
-        - NEXTAUTH_URL=http://localhost:3000/api/auth
-        - NEXT_API_URL=http://localhost:3000/api
-        - DB_HOST=38.242.211.248
-        - DB_PORT=23306
-        - DB_NAME=flotta
-        - DB_USER=admin
-        - DB_PASS=10825660
-        - API_PORT=3030
-        - API_PORT=3000
   db:
     container_name: db
     image: mysql:8.2

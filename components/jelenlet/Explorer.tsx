@@ -23,7 +23,6 @@ const getJelenlet = async (date?: Date) => {
   const startofWeek = date || firstDayOfWeek();
 
   try {
-    console.log(`${apiURL}/jelenlet?date=${startofWeek}`);
     const response = await axios.get<Jelenlet[]>(
       `${apiURL}/jelenlet?date=${startofWeek}`
     );
@@ -37,8 +36,6 @@ const getJelenlet = async (date?: Date) => {
 
 export async function Explorer() {
   const data = (await getJelenlet()) || [];
-
-  console.log("get jelenlet", data);
 
   return (
     <div className="w-full p-6 flex flex-col items-start">

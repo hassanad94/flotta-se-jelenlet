@@ -1,12 +1,5 @@
 import mysql from "mysql2";
 
-console.log({
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT || "0"),
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-  })
 
 export const pool = mysql
   .createPool({
