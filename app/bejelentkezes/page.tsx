@@ -7,7 +7,7 @@ const Page = async () => {
 
   const apiPort = process.env.API_PORT || 3001;
 
-  let apiPath = "/api/auth/signin";
+  const signInPath = "/api/auth/signin/";
 
   let url = new URL(`http://localhost:${apiPort}/api/auth/signin`);
 
@@ -17,11 +17,8 @@ const Page = async () => {
 
   url.search = params.toString();
 
-  apiPath = url.toString();
 
-  if (!session) return redirect(apiPath);
-
-  console.log({ session });
+  if (!session) return redirect(`${signInPath}${url.search}`);
   //create a url with query params
   url = new URL(`http://localhost:${apiPort}/`);
   params = new URLSearchParams({
@@ -30,7 +27,6 @@ const Page = async () => {
   });
   url.search = params.toString();
 
-  apiPath = url.toString();
 
   const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
@@ -47,9 +43,11 @@ const Page = async () => {
     console.log({ data });
   } catch (error) {
     console.error(error);
+
+    return redirect("/");
   }
 
-  if (session) return redirect(apiPath);
+  if (session) return redirect(`/${url.search}`);
 };
 
 export default Page;
