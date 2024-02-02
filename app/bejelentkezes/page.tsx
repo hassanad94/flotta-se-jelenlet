@@ -1,3 +1,4 @@
+import {headers} from "next/headers"
 import { authOptions } from "@/components/Auth/AuthOptions";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
@@ -9,16 +10,21 @@ const Page = async () => {
 
   const signInPath = "/api/auth/signin/";
 
-  let url = new URL(`http://localhost:${apiPort}/api/auth/signin`);
+  const domain = headers().get("host");
+
+  let url = new URL(`${domain}${signInPath}`);
 
   let params = new URLSearchParams({
-    calbackUrl: `http://localhost:${apiPort}/bejelentkezes`,
+    calbackUrl: `${domain}/bejelentkezes`,
   });
 
   url.search = params.toString();
 
+  console.log(`${signInPath}${url.search}`)
+
 
   if (!session) return redirect(`${signInPath}${url.search}`);
+  
   //create a url with query params
   url = new URL(`http://localhost:${apiPort}/`);
   params = new URLSearchParams({
@@ -28,7 +34,8 @@ const Page = async () => {
   url.search = params.toString();
 
 
-  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+  const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
 
   try {
     const response = await fetch(`${apiURL}/jelenlet`, {
@@ -40,7 +47,7 @@ const Page = async () => {
     });
 
     const data = await response.json();
-    console.log({ data });
+  
   } catch (error) {
     console.error(error);
 
