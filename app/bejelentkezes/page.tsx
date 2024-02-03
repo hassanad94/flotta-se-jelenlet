@@ -11,8 +11,12 @@ const Page = async () => {
   const signInPath = "/api/auth/signin/";
 
   const domain = headers().get("host");
+  const protocol = headers().get("x-forwarded-proto");
 
-  let url = new URL(`${domain}${signInPath}`);
+  const siteURL = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${domain}`
+
+
+  let url = new URL(`${siteURL}${signInPath}`);
 
   let params = new URLSearchParams({
     calbackUrl: `${domain}/bejelentkezes`,
@@ -20,13 +24,13 @@ const Page = async () => {
 
   url.search = params.toString();
 
-  console.log(`${signInPath}${url.search}`)
+  console.log(`${siteURL}${signInPath}${url.search}`)
 
 
-  if (!session) return redirect(`${signInPath}${url.search}`);
+  if (!session) return redirect(`${siteURL}${signInPath}${url.search}`);
   
   //create a url with query params
-  url = new URL(`http://localhost:${apiPort}/`);
+  url = new URL(`${siteURL}`);
   params = new URLSearchParams({
     message: "sikeresen Bejelentkeztél Edzésre. ⚽⚽⚽",
     type: "success",
@@ -51,10 +55,10 @@ const Page = async () => {
   } catch (error) {
     console.error(error);
 
-    return redirect("/");
+    return redirect(`${siteURL}`);
   }
 
-  if (session) return redirect(`/${url.search}`);
+  if (session) return redirect(`${siteURL}/${url.search}`);
 };
 
 export default Page;

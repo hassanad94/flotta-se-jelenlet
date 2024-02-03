@@ -26,7 +26,7 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
-COPY .env.local .env.production
+COPY .env.production .env.production
 
 RUN yarn build
 
