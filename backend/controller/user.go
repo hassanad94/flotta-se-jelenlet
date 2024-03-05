@@ -29,6 +29,8 @@ func GetUser(c echo.Context) error {
 
 	connection, err := db.ConnectMySQL()
 
+	defer connection.Close()
+
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}

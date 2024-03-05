@@ -16,6 +16,7 @@ services:
         dockerfile: next.dockerfile
       ports:
         - 23000:3000
+      restart: always
   db:
     container_name: db
     image: mysql:8.2
@@ -35,6 +36,7 @@ services:
       - '23306'
     volumes:
       - my-db:/var/lib/mysql
+    restart: always
 
 volumes:
   my-db: {}
