@@ -11,5 +11,5 @@ func main() {
 	
 	router.InitRoutes(e)
 
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(":1325"))
 }

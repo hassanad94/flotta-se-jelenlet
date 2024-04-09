@@ -83,12 +83,12 @@ func Bejelentkezes(c echo.Context) error{
 
 
 	connection, err := db.ConnectMySQL()
-
-	defer connection.Close()
 	
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
+	
+	defer connection.Close()
 	
 	result, err := connection.Exec("INSERT INTO flotta.attendences (player_id) VALUES (?)", userID)
 	if err != nil {
@@ -105,3 +105,34 @@ func Bejelentkezes(c echo.Context) error{
 
 }
 
+func GetTrainingsDates( c echo.Context) error{
+	connection, err := db.ConnectMySQL()
+	
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	defer connection.Close()
+
+
+	var trainingsDates []string
+
+	rows, err := connection.Query("SELECT date FROM flotta.trainingsessions")
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	defer rows.Close()
+
+	for rows.Next(){
+		var training model.Trainingsession
+		err := rows.Scan(&training.Date)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, err.Error())
+		}
+		trainingsDates = append(trainingsDates, training.Date)
+		
+	}
+
+	return c.JSON(http.StatusOK, trainingsDates)
+}

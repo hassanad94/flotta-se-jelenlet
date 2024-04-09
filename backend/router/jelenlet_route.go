@@ -9,4 +9,5 @@ import (
 func SetJelenletRoutes(e *echo.Echo){
 	e.GET("/jelenlet", controller.GetJelenlet)
 	e.POST("/jelenlet", controller.Bejelentkezes)
+	e.GET("/jelenlet/getTrainingsDates", controller.GetTrainingsDates)
 }
